@@ -79,8 +79,8 @@ val hasMKL = {
 
 //libraryDependencies +=   "io.github.mullerhai" % "core_3" % "0.3.5-1.15.1"
 //libraryDependencies +=   "dev.storch" % "vision_3" % "0.2.3-1.15.1"
-libraryDependencies +=  "org.scalameta" %% "munit" % "0.7.29" //% Test
-libraryDependencies +=  "org.scalameta" %% "munit-scalacheck" % "0.7.29" // % Test
+libraryDependencies +=  "org.scalameta" %% "munit" % "0.7.29" % Test
+libraryDependencies +=  "org.scalameta" %% "munit-scalacheck" % "0.7.29" % Test
 ThisBuild  / assemblyMergeStrategy := {
   case v if v.contains("module-info.class")   => MergeStrategy.discard
   case v if v.contains("UnusedStub")          => MergeStrategy.first

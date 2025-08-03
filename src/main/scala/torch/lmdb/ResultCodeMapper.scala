@@ -1,5 +1,5 @@
 /*
- * Copyright © 2016-2025 The LmdbJava Open Source Project
+ * Copyright © 2016-2025 The torch.lmdb Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +18,11 @@ package torch.lmdb
 import jnr.constants.ConstantSet.getConstantSet
 import jnr.constants.Constant
 import jnr.constants.ConstantSet
-import torch.lmdb.Txn.BadException
-import torch.lmdb.Txn.BadReaderLockException
-import torch.lmdb.Txn.TxFullException
+import torch.lmdb.db.{Cursor, Dbi, Env, Txn}
+import torch.lmdb.db.Txn.BadException
+import torch.lmdb.db.Txn.BadReaderLockException
+import torch.lmdb.db.Txn.TxFullException
+import torch.lmdb.exceptions.LmdbNativeException
 
 /**
  * Maps a LMDB C result code to the equivalent Java exception.

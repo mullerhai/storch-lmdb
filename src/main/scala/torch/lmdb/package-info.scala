@@ -1,5 +1,5 @@
 /*
- * Copyright © 2016-2025 The LmdbJava Open Source Project
+ * Copyright © 2016-2025 The torch.lmdb Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 /**
- * Lightning Memory Database (LMDB) for Java (LmdbJava).
+ * Lightning Memory Database (LMDB) for Java (torch.lmdb).
  *
- * <p>LmdbJava is intended for extremely low latency use cases. Users are required to understand and
+ * <p>torch.lmdb is intended for extremely low latency use cases. Users are required to understand and
  * comply with the LMDB C API contract (eg handle usage patterns, thread binding, process rules).
  *
  * <p>Priorities:
@@ -38,8 +38,8 @@
  * <li>Any operation that uses a cursor
  * </ul>
  *
- * <p>The classes in LmdbJava DO NOT provide any concurrency guarantees. Instead you MUST observe
- * LMDB's specific thread rules (eg do not share transactions between threads). LmdbJava does not
+ * <p>The classes in torch.lmdb DO NOT provide any concurrency guarantees. Instead you MUST observe
+ * LMDB's specific thread rules (eg do not share transactions between threads). torch.lmdb does not
  * shield you from these requirements, as doing so would impose locking overhead on use cases that
  * may not require it or have already carefully implemented application threading (as most low
  * latency applications do to optimize the memory hierarchy, core pinning etc).

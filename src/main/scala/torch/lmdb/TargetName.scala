@@ -1,5 +1,5 @@
 /*
- * Copyright © 2016-2025 The LmdbJava Open Source Project
+ * Copyright © 2016-2025 The torch.lmdb Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import java.util.Locale.ENGLISH
 /**
  * Determines the name of the target LMDB native library.
  *
- * <p>Users will typically use an LMDB native library that is embedded within the LmdbJava JAR.
+ * <p>Users will typically use an LMDB native library that is embedded within the torch.lmdb JAR.
  * Embedded libraries are built by a Zig cross-compilation step as part of the release process. The
  * naming convention reflects the Zig target name plus a common filename extension. This simplifies
  * support for future Zig targets (eg with different toolchains etc).
@@ -40,15 +40,15 @@ object TargetName {
   /**
    * Java system property name that can be set to override the embedded library that will be used.
    * This is likely to be required if automatic resolution fails but the user still prefers to use
-   * an LmdbJava-bundled library. This path must include the classpath prefix (usually <code>
-   * org/lmdbjava</code>).
+   * an torch.lmdb-bundled library. This path must include the classpath prefix (usually <code>
+   * org/torch.lmdb</code>).
    */
-  val LMDB_EMBEDDED_LIB_PROP = "lmdbjava.embedded.lib"
+  val LMDB_EMBEDDED_LIB_PROP = "torch.lmdb.embedded.lib"
   /**
    * Java system property name that can be set to provide a custom path to an external LMDB system
    * library.
    */
-  val LMDB_NATIVE_LIB_PROP = "lmdbjava.native.lib"
+  val LMDB_NATIVE_LIB_PROP = "torch.lmdb.native.lib"
   /** Resolved target native filename or fully-qualified classpath location. */
   var RESOLVED_FILENAME: String = null
   private val ARCH = getProperty("os.arch")
@@ -60,7 +60,7 @@ object TargetName {
    * Resolves the filename extension of the bundled LMDB library for a given operating system.
    *
    * @param os typically the <code>os.name</code> system property
-   * @return extension of the LMDB system library bundled with LmdbJava
+   * @return extension of the LMDB system library bundled with torch.lmdb
    */
   def resolveExtension(os: String): String = if (check(os, "Windows")) "dll"
   else "so"
@@ -90,7 +90,7 @@ object TargetName {
     false
   }
 
-  private def err(reason: String) = reason + " (please set system property " + LMDB_NATIVE_LIB_PROP + " to the path of an external LMDB native library or property " + LMDB_EMBEDDED_LIB_PROP + " to the name of an LmdbJava embedded" + " library; os.arch='" + ARCH + "' os.name='" + OS + "')"
+  private def err(reason: String) = reason + " (please set system property " + LMDB_NATIVE_LIB_PROP + " to the path of an external LMDB native library or property " + LMDB_EMBEDDED_LIB_PROP + " to the name of an torch.lmdb embedded" + " library; os.arch='" + ARCH + "' os.name='" + OS + "')"
 
   private def resolveArch(arch: String): String = {
     if (check(arch, "aarch64")) return "aarch64"

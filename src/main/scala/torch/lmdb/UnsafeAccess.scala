@@ -1,5 +1,5 @@
 /*
- * Copyright © 2016-2025 The LmdbJava Open Source Project
+ * Copyright © 2016-2025 The torch.lmdb Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,11 +18,12 @@ package torch.lmdb
 import java.lang.Boolean.getBoolean
 import java.lang.reflect.Field
 import sun.misc.Unsafe
+import torch.lmdb.exceptions.LmdbException
 
 /** Provides access to Unsafe. */
 object UnsafeAccess {
   /** Java system property name that can be set to disable unsafe. */
-  val DISABLE_UNSAFE_PROP = "lmdbjava.disable.unsafe"
+  val DISABLE_UNSAFE_PROP = "torch.lmdb.disable.unsafe"
   /** Indicates whether unsafe use is allowed. */
   val ALLOW_UNSAFE: Boolean = !getBoolean(DISABLE_UNSAFE_PROP)
   /**

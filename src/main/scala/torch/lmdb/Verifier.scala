@@ -1,5 +1,5 @@
 /*
- * Copyright © 2016-2025 The LmdbJava Open Source Project
+ * Copyright © 2016-2025 The torch.lmdb Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,11 +15,13 @@
  */
 package torch.lmdb
 
-import java.util.Objects.requireNonNull
-import torch.lmdb.DbiFlags.MDB_CREATE
-import torch.lmdb.LmdbException
+import torch.lmdb.db.{Dbi, Env, Txn}
 
-import java.nio.ByteBuffer
+import java.util.Objects.requireNonNull
+import torch.lmdb.flags.DbiFlags.MDB_CREATE
+import torch.lmdb.exceptions.LmdbException
+
+import java.nio.{ByteBuffer, ByteOrder}
 import java.util
 import java.util.Random
 import java.util.concurrent.Callable
@@ -32,9 +34,9 @@ import java.util.concurrent.atomic.AtomicBoolean
 import java.util.zip.CRC32
 
 /**
- * Verifies correct operation of LmdbJava in a given environment.
+ * Verifies correct operation of torch.lmdb in a given environment.
  *
- * <p>Due to the large variety of operating systems and Java platforms typically used with LmdbJava,
+ * <p>Due to the large variety of operating systems and Java platforms typically used with torch.lmdb,
  * this class provides a convenient verification of correct operating behavior through a potentially
  * long duration set of tests that carefully verify correct storage and retrieval of successively
  * larger database entries.
@@ -53,12 +55,12 @@ import java.util.zip.CRC32
  *
  * <ol>
  * <li>Ensure the {@link Env} passed at construction time complies with the requirements specified
- * at {@link # Verifier ( org.lmdbjava.Env )}
+ * at {@link # Verifier ( org.torch.lmdb.Env )}
  * <li>Attempt to use a different file system to store the database (be especially careful to not
  * use network file systems, remote file systems, read-only file systems etc)
  * <li>Record the full exception message and stack trace, then run the verifier again to see if it
  * fails at the same or a different point
- * <li>Raise a ticket on the LmdbJava Issue Tracker that confirms the above details along with the
+ * <li>Raise a ticket on the torch.lmdb Issue Tracker that confirms the above details along with the
  * failing operating system and Java version
  * </ol>
  */
@@ -71,23 +73,9 @@ object Verifier {
   private val KEY_LENGTH = java.lang.Long.BYTES
 }
 
-final class Verifier(private val env: Env[ByteBuffer])
-
-/**
- * Create an instance of the verifier.
- *
- * <p>The caller must provide an {@link Env} configured with a suitable local storage location,
- * maximum DBIs equal to {@link # DBI_COUNT}, and a map size large enough to accommodate the
- * intended verification duration.
- *
- * <p>ALL EXISTING DATA IN THE DATABASE WILL BE DELETED. The caller must not interact with the
- * <code>Env</code> in any way (eg querying, transactions etc) while the verifier is executing.
- *
- * @param env target that complies with the above requirements (required)
- */
-  extends Callable[Long] {
+final class Verifier(private val env: Env[ByteBuffer]) extends Callable[Long] {
   requireNonNull(env)
-  key.order(BIG_ENDIAN)
+  key.order(ByteOrder.BIG_ENDIAN)
   deleteDbis()
   createDbis()
   final private val ba = new Array[Byte](Verifier.BUFFER_LEN)
@@ -137,7 +125,7 @@ final class Verifier(private val env: Env[ByteBuffer])
     catch {
       case ignored: InterruptedException =>
     } finally stop()
-    val result = 0L
+    var result = 0L
     try result = future.get
     catch {
       case ex@(_: InterruptedException | _: ExecutionException) =>
@@ -169,8 +157,8 @@ final class Verifier(private val env: Env[ByteBuffer])
   private def fetchAndDelete(forId: Long): Unit = {
     val dbi = getDbi(forId)
     updateKey(forId)
-    val fetchedValue: ByteBuffer = null
-    try fetchedValue = dbi.get(txn, key)
+    var fetchedValue: ByteBuffer = null
+    try fetchedValue = dbi.get(txn, key).get
     catch {
       case ex: LmdbException =>
         throw new IllegalStateException("DB get id=" + forId, ex)

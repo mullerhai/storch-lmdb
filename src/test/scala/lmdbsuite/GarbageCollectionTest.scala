@@ -39,12 +39,13 @@ object GarbageCollectionTest {
 }
 
 class GarbageCollectionTest {
-  @Rule final val tmp = new TemporaryFolder
+  @Rule final def tmpDef = new TemporaryFolder
+  val tmp = tmpDef
 
   @Test
   @throws[IOException]
   def buffersNotGarbageCollectedTest(): Unit = {
-    val path = tmp.newFolder
+    val path = new File(tmp.newFolder, "test")
     try {
       val env = create.setMapSize(2_085_760_999).setMaxDbs(1).open(path)
       try {
@@ -102,7 +103,7 @@ class GarbageCollectionTest {
                 val sval = new String(rval, UTF_8)
                 if (!skey.startsWith("Uncorruptedkey")) fail("Found corrupt key " + skey)
                 if (!sval.startsWith("Uncorruptedval")) fail("Found corrupt val " + sval)
-              } 
+              }
             }
             finally if (c != null) c.close()
           }

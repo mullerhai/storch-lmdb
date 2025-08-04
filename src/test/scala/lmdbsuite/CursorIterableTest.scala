@@ -65,7 +65,9 @@ import torch.lmdb.db.{CursorIterable, Dbi, Env, KeyRange}
 
 /** Test {@link CursorIterable}. */
 final class CursorIterableTest {
-  @Rule final val tmp = new TemporaryFolder
+  @Rule final def tmpDef = new TemporaryFolder
+  val tmp = tmpDef
+
   private var db: Dbi[ByteBuffer] = null
   private var env: Env[ByteBuffer] = null
   private var list: util.Deque[Integer] = null
@@ -357,7 +359,7 @@ final class CursorIterableTest {
         try {
           val c = ci.iterator
           env.close()
-          
+
 //          c.forEachRemaining((keyVal: CursorIterable.KeyVal[ByteBuffer]) => {
 //          })
         } finally if (ci != null) ci.close()

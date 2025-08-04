@@ -226,7 +226,8 @@ import torch.lmdb.proxy.BufferProxy
 @RunWith(classOf[Parameterized]) final class CursorParamTest {
   /** Injected by {@link # data ( )} with appropriate runner. */
   @Parameter var runner: CursorParamTest.BufferRunner[?] = null
-  @Rule final val tmp = new TemporaryFolder
+  @Rule final def tmpDef = new TemporaryFolder
+  val tmp = tmpDef
 
   @Test def execute(): Unit = {
     runner.execute(tmp)

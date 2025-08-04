@@ -14,7 +14,7 @@ import scala.collection.Seq
 ////    csrCacheDirectory := file("D:\\coursier"),
 //  )
 
-ThisBuild / tlBaseVersion := "0.0.4-1.15.1" // your current series x.y
+ThisBuild / tlBaseVersion := "0.0.5-1.15.2" // your current series x.y
 //ThisBuild / CoursierCache := file("D:\\coursier")
 ThisBuild / organization := "io.github.mullerhai" //"dev.storch"
 ThisBuild / organizationName := "storch.dev"
@@ -24,7 +24,7 @@ ThisBuild / developers := List(
   // your GitHub handle and name
   tlGitHubDev("mullerhai", "mullerhai")
 )
-ThisBuild / version := "0.0.4-1.15.1"
+ThisBuild / version := "0.0.5-1.15.2"
 
 ThisBuild / scalaVersion := "3.6.4"
 ThisBuild / tlSonatypeUseLegacyHost := false
@@ -62,7 +62,7 @@ val cudaVersion = "12.6-9.5"  //"12.4.99" // "12.3-8.9"
 val openblasVersion = "0.3.28"// "0.3.26"
 val mklVersion = "2025.0"//"2024.0"
 ThisBuild / scalaVersion := "3.6.2"
-ThisBuild / javaCppVersion := "1.5.11"//"1.5.10"
+ThisBuild / javaCppVersion := "1.5.12"//"1.5.10"
 ThisBuild / resolvers ++= Resolver.sonatypeOssRepos("snapshots")
 
 ThisBuild / githubWorkflowJavaVersions := Seq(JavaSpec.temurin("11"))

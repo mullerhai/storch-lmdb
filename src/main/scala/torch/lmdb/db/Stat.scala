@@ -17,7 +17,7 @@ package torch
 package lmdb.db
 
 /** Statistics, as returned by {@link Env# stat ( )} and {@link Dbi# stat ( org.torch.lmdb.Txn )}. */
-final class Stat private[torch](/** Size of a database page. This is currently the same for all databases. */
+final class Stat (/** Size of a database page. This is currently the same for all databases. */
                                    val pageSize: Int,
 
                                    /** Depth (height) of the B-tree. */

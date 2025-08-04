@@ -33,7 +33,7 @@ object KeyVal {
   private val MEM_MGR = RUNTIME.getMemoryManager
 }
 
-final class KeyVal[T] private[torch](private var proxy: BufferProxy[T]) extends AutoCloseable {
+final class KeyVal[T] (private var proxy: BufferProxy[T]) extends AutoCloseable {
   requireNonNull(proxy)
   private var closed = false
   private var k: T = proxy.allocate
@@ -59,28 +59,28 @@ final class KeyVal[T] private[torch](private var proxy: BufferProxy[T]) extends 
     proxy.deallocate(v)
   }
 
-  private[torch] def key = k
+  def key = k
 
-  private[torch] def keyIn(key: T): Unit = {
+  def keyIn(key: T): Unit = {
     proxy.in(key, ptrKey, ptrKeyAddr)
   }
 
-  private[torch] def keyOut = {
+  def keyOut = {
     k = proxy.out(k, ptrKey, ptrKeyAddr)
     k
   }
 
-  private[torch] def pointerKey = ptrKey
+  def pointerKey = ptrKey
 
-  private[torch] def pointerVal = ptrVal
+  def pointerVal = ptrVal
 
-  private[torch] def vals = v
+  def vals = v
 
-  private[torch] def valIn(vals: T): Unit = {
+  def valIn(vals: T): Unit = {
     proxy.in(vals, ptrVal, ptrValAddr)
   }
 
-  private[torch] def valIn(size: Int): Unit = {
+  def valIn(size: Int): Unit = {
     proxy.in(v, size, ptrVal, ptrValAddr)
   }
 
@@ -101,7 +101,7 @@ final class KeyVal[T] private[torch](private var proxy: BufferProxy[T]) extends 
    * @param elements number of data elements the user has provided
    * @return a properly-prepared pointer to an array for the operation
    */
-  private[torch] def valInMulti(vals: T, elements: Int) = {
+  def valInMulti(vals: T, elements: Int) = {
     val ptrVal2SizeOff = MDB_VAL_STRUCT_SIZE + STRUCT_FIELD_OFFSET_SIZE
     ptrArray.putLong(ptrVal2SizeOff, elements) // ptrVal2.size
     proxy.in(vals, ptrVal, ptrValAddr) // ptrVal1.data
@@ -111,7 +111,7 @@ final class KeyVal[T] private[torch](private var proxy: BufferProxy[T]) extends 
     ptrArray
   }
 
-  private[torch] def valOut = {
+  def valOut = {
     v = proxy.out(v, ptrVal, ptrValAddr)
     v
   }

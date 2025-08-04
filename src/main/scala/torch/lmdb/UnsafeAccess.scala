@@ -15,9 +15,12 @@
  */
 package torch.lmdb
 
+//import jdk.internal.misc.Unsafe
+
+import sun.misc.Unsafe
+
 import java.lang.Boolean.getBoolean
 import java.lang.reflect.Field
-import sun.misc.Unsafe
 import torch.lmdb.exceptions.LmdbException
 
 /** Provides access to Unsafe. */
@@ -31,7 +34,7 @@ object UnsafeAccess {
  * #ALLOW_UNSAFE} is true. In other words, this entire class will fail to initialize if unsafe is
    * unavailable. This avoids callers from needing to deal with null checks.
    */
-  private[torch] var UNSAFE: Unsafe = null
+  var UNSAFE: Unsafe = null
   /** Unsafe field name (used to reflectively obtain the unsafe instance). */
   private val FIELD_NAME_THE_UNSAFE = "theUnsafe"
   try if (!ALLOW_UNSAFE) throw new LmdbException("Unsafe disabled by user")

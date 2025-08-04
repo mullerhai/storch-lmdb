@@ -48,7 +48,7 @@ object Meta {
   }
 
   /** Immutable return value from {@link # version ( )}. */
-  final class Version private[torch](
+  final class Version (
                                          /** LMDC native library major version number. */
                                          val major: Int,
 

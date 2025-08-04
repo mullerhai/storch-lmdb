@@ -14,7 +14,7 @@ import scala.collection.Seq
 ////    csrCacheDirectory := file("D:\\coursier"),
 //  )
 
-ThisBuild / tlBaseVersion := "0.1.2-1.15.1" // your current series x.y
+ThisBuild / tlBaseVersion := "0.0.4-1.15.1" // your current series x.y
 //ThisBuild / CoursierCache := file("D:\\coursier")
 ThisBuild / organization := "io.github.mullerhai" //"dev.storch"
 ThisBuild / organizationName := "storch.dev"
@@ -24,7 +24,7 @@ ThisBuild / developers := List(
   // your GitHub handle and name
   tlGitHubDev("mullerhai", "mullerhai")
 )
-ThisBuild / version := "0.1.2-1.15.1"
+ThisBuild / version := "0.0.4-1.15.1"
 
 ThisBuild / scalaVersion := "3.6.4"
 ThisBuild / tlSonatypeUseLegacyHost := false
@@ -116,3 +116,7 @@ libraryDependencies += "org.agrona" % "agrona" % "2.2.2"
 libraryDependencies += "org.hamcrest" % "hamcrest" % "3.0" % Test
 // https://mvnrepository.com/artifact/org.mockito/mockito-inline
 libraryDependencies += "org.mockito" % "mockito-inline" % "5.2.0" % Test
+// https://mvnrepository.com/artifact/org.lmdbjava/lmdbjava
+//libraryDependencies += "org.lmdbjava" % "lmdbjava" % "0.9.1"
+// https://mvnrepository.com/artifact/com.jakewharton.byteunits/byteunits
+libraryDependencies += "com.jakewharton.byteunits" % "byteunits" % "0.9.1" % Test

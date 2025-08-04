@@ -16,7 +16,7 @@
 package torch.lmdb
 
 /** Environment information, as returned by {@link Env# info ( )}. */
-final class EnvInfo private[torch](/** Address of map, if fixed. */
+final class EnvInfo (/** Address of map, if fixed. */
                                       val mapAddress: Long,
 
                                       /** Size of the data memory map. */

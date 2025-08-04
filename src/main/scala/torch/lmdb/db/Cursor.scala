@@ -53,20 +53,19 @@ object Cursor {
   /** Cursor stack too deep - internal error. */
   @SerialVersionUID(1L)
   object FullException {
-    private[torch] val MDB_CURSOR_FULL = -30_787
+    val MDB_CURSOR_FULL = -30_787
   }
 
   @SerialVersionUID(1L)
-  final class FullException private[torch] extends LmdbNativeException(FullException.MDB_CURSOR_FULL, "Cursor stack too deep - internal error") {
+  final class FullException extends LmdbNativeException(FullException.MDB_CURSOR_FULL, "Cursor stack too deep - internal error") {
   }
 }
 
-final class Cursor[T] private[torch](private val ptrCursor: Pointer, private var txn: Txn[T], private val env: Env[T]) extends AutoCloseable {
+final class Cursor[T] (private val ptrCursor: Pointer, private var txn: Txn[T], private val env: Env[T]) extends AutoCloseable {
   requireNonNull(ptrCursor)
   requireNonNull(txn)
-  this.kv = txn.newKeyVal
   private var closed = false
-  final private var kv: KeyVal[T] = null
+  final private var kv: KeyVal[T] = txn.newKeyVal
 
   /**
    * Close a cursor handle.

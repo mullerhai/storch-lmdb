@@ -23,62 +23,62 @@ import java.lang.String.format
 object LmdbNativeException {
   /** Exception raised from a system constant table lookup. */
   @SerialVersionUID(1L)
-  final class ConstantDerivedException private[torch](rc: Int, message: String) extends LmdbNativeException(rc, "Platform constant error code: " + message) {
+  final class ConstantDerivedException (rc: Int, message: String) extends LmdbNativeException(rc, "Platform constant error code: " + message) {
   }
 
   /** Located page was wrong type. */
   @SerialVersionUID(1L)
   object PageCorruptedException {
-    private[torch] val MDB_CORRUPTED = -30_796
+    val MDB_CORRUPTED = -30_796
   }
 
   @SerialVersionUID(1L)
-  final class PageCorruptedException private[torch] extends LmdbNativeException(PageCorruptedException.MDB_CORRUPTED, "located page was wrong type") {
+  final class PageCorruptedException extends LmdbNativeException(PageCorruptedException.MDB_CORRUPTED, "located page was wrong type") {
   }
 
   /** Page has not enough space - internal error. */
   @SerialVersionUID(1L)
   object PageFullException {
-    private[torch] val MDB_PAGE_FULL = -30_786
+    val MDB_PAGE_FULL = -30_786
   }
 
   @SerialVersionUID(1L)
-  final class PageFullException private[torch] extends LmdbNativeException(PageFullException.MDB_PAGE_FULL, "Page has not enough space - internal error") {
+  final class PageFullException extends LmdbNativeException(PageFullException.MDB_PAGE_FULL, "Page has not enough space - internal error") {
   }
 
   /** Requested page not found - this usually indicates corruption. */
   @SerialVersionUID(1L)
   object PageNotFoundException {
-    private[torch] val MDB_PAGE_NOTFOUND = -30_797
+    val MDB_PAGE_NOTFOUND = -30_797
   }
 
   @SerialVersionUID(1L)
-  final class PageNotFoundException private[torch] extends LmdbNativeException(PageNotFoundException.MDB_PAGE_NOTFOUND, "Requested page not found - this usually indicates corruption") {
+  final class PageNotFoundException extends LmdbNativeException(PageNotFoundException.MDB_PAGE_NOTFOUND, "Requested page not found - this usually indicates corruption") {
   }
 
   /** Update of meta page failed or environment had fatal error. */
   @SerialVersionUID(1L)
   object PanicException {
-    private[torch] val MDB_PANIC = -30_795
+    val MDB_PANIC = -30_795
   }
 
   @SerialVersionUID(1L)
-  final class PanicException private[torch] extends LmdbNativeException(PanicException.MDB_PANIC, "Update of meta page failed or environment had fatal error") {
+  final class PanicException extends LmdbNativeException(PanicException.MDB_PANIC, "Update of meta page failed or environment had fatal error") {
   }
 
   /** Too many TLS keys in use - Windows only. */
   @SerialVersionUID(1L)
   object TlsFullException {
-    private[torch] val MDB_TLS_FULL = -30_789
+    val MDB_TLS_FULL = -30_789
   }
 
   @SerialVersionUID(1L)
-  final class TlsFullException private[torch] extends LmdbNativeException(TlsFullException.MDB_TLS_FULL, "Too many TLS keys in use - Windows only") {
+  final class TlsFullException extends LmdbNativeException(TlsFullException.MDB_TLS_FULL, "Too many TLS keys in use - Windows only") {
   }
 }
 
 @SerialVersionUID(1L)
-class LmdbNativeException private[torch](/** Result code returned by the LMDB C function. */
+class LmdbNativeException (/** Result code returned by the LMDB C function. */
                                             private val rc: Int, msg: String)
 
 /**

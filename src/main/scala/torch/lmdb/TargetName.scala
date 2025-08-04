@@ -65,9 +65,9 @@ object TargetName {
   def resolveExtension(os: String): String = if (check(os, "Windows")) "dll"
   else "so"
 
-  private[torch] def isExternal(external: String) = external != null && !external.isEmpty
+  def isExternal(external: String) = external != null && !external.isEmpty
 
-  private[torch] def resolveFilename(external: String, embed: String, arch: String, os: String): String = {
+  def resolveFilename(external: String, embed: String, arch: String, os: String): String = {
     if (external != null && !external.isEmpty) return external
     if (embed != null && !embed.isEmpty) return embed
     val pkg = classOf[TargetName].getPackage.getName.replace('.', '/')

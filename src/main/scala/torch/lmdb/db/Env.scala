@@ -111,10 +111,10 @@ object Env {
    * @param < T> buffer type
    */
   object Builder {
-    private[torch] val MAX_READERS_DEFAULT = 126
+    val MAX_READERS_DEFAULT = 126
   }
 
-  final class Builder[T] private[torch](private val proxy: BufferProxy[T]) {
+  final class Builder[T] (private val proxy: BufferProxy[T]) {
     requireNonNull(proxy)
     private var mapSize = 1_024 * 1_024
     private var maxDbs = 1
@@ -202,11 +202,11 @@ object Env {
   /** File is not a valid LMDB file. */
   @SerialVersionUID(1L)
   object FileInvalidException {
-    private[torch] val MDB_INVALID = -30_793
+    val MDB_INVALID = -30_793
   }
 
   @SerialVersionUID(1L)
-  final class FileInvalidException private[torch] extends LmdbNativeException(FileInvalidException.MDB_INVALID, "File is not a valid LMDB file") {
+  final class FileInvalidException extends LmdbNativeException(FileInvalidException.MDB_INVALID, "File is not a valid LMDB file") {
   }
 
   /** The specified copy destination is invalid. */
@@ -217,31 +217,31 @@ object Env {
   /** Environment mapsize reached. */
   @SerialVersionUID(1L)
   object MapFullException {
-    private[torch] val MDB_MAP_FULL = -30_792
+    val MDB_MAP_FULL = -30_792
   }
 
   @SerialVersionUID(1L)
-  final class MapFullException private[torch] extends LmdbNativeException(MapFullException.MDB_MAP_FULL, "Environment mapsize reached") {
+  final class MapFullException extends LmdbNativeException(MapFullException.MDB_MAP_FULL, "Environment mapsize reached") {
   }
 
   /** Environment maxreaders reached. */
   @SerialVersionUID(1L)
   object ReadersFullException {
-    private[torch] val MDB_READERS_FULL = -30_790
+    val MDB_READERS_FULL = -30_790
   }
 
   @SerialVersionUID(1L)
-  final class ReadersFullException private[torch] extends LmdbNativeException(ReadersFullException.MDB_READERS_FULL, "Environment maxreaders reached") {
+  final class ReadersFullException extends LmdbNativeException(ReadersFullException.MDB_READERS_FULL, "Environment maxreaders reached") {
   }
 
   /** Environment version mismatch. */
   @SerialVersionUID(1L)
   object VersionMismatchException {
-    private[torch] val MDB_VERSION_MISMATCH = -30_794
+    val MDB_VERSION_MISMATCH = -30_794
   }
 
   @SerialVersionUID(1L)
-  final class VersionMismatchException private[torch] extends LmdbNativeException(VersionMismatchException.MDB_VERSION_MISMATCH, "Environment version mismatch") {
+  final class VersionMismatchException extends LmdbNativeException(VersionMismatchException.MDB_VERSION_MISMATCH, "Environment version mismatch") {
   }
 }
 
@@ -537,9 +537,9 @@ final class Env[T] private(private val proxy: BufferProxy[T], private val ptr: P
    */
   def txnWrite: Txn[T] = txn(null)
 
-  private[torch] def pointer = ptr
+  def pointer = ptr
 
-  private[torch] def checkNotClosed(): Unit = {
+  def checkNotClosed(): Unit = {
     if (closed) throw new Env.AlreadyClosedException
   }
 

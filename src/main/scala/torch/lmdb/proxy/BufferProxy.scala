@@ -134,5 +134,5 @@ abstract class BufferProxy[T]  {
    *
    * @return a non-null key value holder
    */
-  final private[torch] def keyVal = new KeyVal[T](this)
+  final def keyVal = new KeyVal[T](this)
 }

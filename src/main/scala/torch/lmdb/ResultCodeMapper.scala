@@ -32,7 +32,7 @@ import torch.lmdb.exceptions.LmdbNativeException
  */
 object ResultCodeMapper {
   /** Successful result. */
-  private[torch] val MDB_SUCCESS = 0
+  val MDB_SUCCESS = 0
   private var CONSTANTS: ConstantSet = null
   private val POSIX_ERR_NO = "Errno"
 
@@ -41,7 +41,7 @@ object ResultCodeMapper {
    *
    * @param rc the LMDB result code
    */
-  private[torch] def checkRc(rc: Int): Unit = {
+  def checkRc(rc: Int): Unit = {
     rc match {
       case MDB_SUCCESS =>
         return

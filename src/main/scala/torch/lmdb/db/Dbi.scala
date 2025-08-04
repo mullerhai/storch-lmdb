@@ -52,31 +52,31 @@ object Dbi {
   /** The specified DBI was changed unexpectedly. */
   @SerialVersionUID(1L)
   object BadDbiException {
-    private[torch] val MDB_BAD_DBI = -30_780
+    val MDB_BAD_DBI = -30_780
   }
 
   @SerialVersionUID(1L)
-  final class BadDbiException private[torch] extends LmdbNativeException(BadDbiException.MDB_BAD_DBI, "The specified DBI was changed unexpectedly") {
+  final class BadDbiException extends LmdbNativeException(BadDbiException.MDB_BAD_DBI, "The specified DBI was changed unexpectedly") {
   }
 
   /** Unsupported size of key/DB name/data, or wrong DUPFIXED size. */
   @SerialVersionUID(1L)
   object BadValueSizeException {
-    private[torch] val MDB_BAD_VALSIZE = -30_781
+    val MDB_BAD_VALSIZE = -30_781
   }
 
   @SerialVersionUID(1L)
-  final class BadValueSizeException private[torch] extends LmdbNativeException(BadValueSizeException.MDB_BAD_VALSIZE, "Unsupported size of key/DB name/data, or wrong DUPFIXED size") {
+  final class BadValueSizeException extends LmdbNativeException(BadValueSizeException.MDB_BAD_VALSIZE, "Unsupported size of key/DB name/data, or wrong DUPFIXED size") {
   }
 
   /** Environment maxdbs reached. */
   @SerialVersionUID(1L)
   object DbFullException {
-    private[torch] val MDB_DBS_FULL = -30_791
+    val MDB_DBS_FULL = -30_791
   }
 
   @SerialVersionUID(1L)
-  final class DbFullException private[torch] extends LmdbNativeException(DbFullException.MDB_DBS_FULL, "Environment maxdbs reached") {
+  final class DbFullException extends LmdbNativeException(DbFullException.MDB_DBS_FULL, "Environment maxdbs reached") {
   }
 
   /**
@@ -93,45 +93,45 @@ object Dbi {
    */
   @SerialVersionUID(1L)
   object IncompatibleException {
-    private[torch] val MDB_INCOMPATIBLE = -30_784
+    val MDB_INCOMPATIBLE = -30_784
   }
 
   @SerialVersionUID(1L)
-  final class IncompatibleException private[torch] extends LmdbNativeException(IncompatibleException.MDB_INCOMPATIBLE, "Operation and DB incompatible, or DB type changed") {
+  final class IncompatibleException extends LmdbNativeException(IncompatibleException.MDB_INCOMPATIBLE, "Operation and DB incompatible, or DB type changed") {
   }
 
   /** Key/data pair already exists. */
   @SerialVersionUID(1L)
   object KeyExistsException {
-    private[torch] val MDB_KEYEXIST = -30_799
+    val MDB_KEYEXIST = -30_799
   }
 
   @SerialVersionUID(1L)
-  final class KeyExistsException private[torch] extends LmdbNativeException(KeyExistsException.MDB_KEYEXIST, "key/data pair already exists") {
+  final class KeyExistsException extends LmdbNativeException(KeyExistsException.MDB_KEYEXIST, "key/data pair already exists") {
   }
 
   /** Key/data pair not found (EOF). */
   @SerialVersionUID(1L)
   object KeyNotFoundException {
-    private[torch] val MDB_NOTFOUND = -30_798
+    val MDB_NOTFOUND = -30_798
   }
 
   @SerialVersionUID(1L)
-  final class KeyNotFoundException private[torch] extends LmdbNativeException(KeyNotFoundException.MDB_NOTFOUND, "key/data pair not found (EOF)") {
+  final class KeyNotFoundException extends LmdbNativeException(KeyNotFoundException.MDB_NOTFOUND, "key/data pair not found (EOF)") {
   }
 
   /** Database contents grew beyond environment mapsize. */
   @SerialVersionUID(1L)
   object MapResizedException {
-    private[torch] val MDB_MAP_RESIZED = -30_785
+    val MDB_MAP_RESIZED = -30_785
   }
 
   @SerialVersionUID(1L)
-  final class MapResizedException private[torch] extends LmdbNativeException(MapResizedException.MDB_MAP_RESIZED, "Database contents grew beyond environment mapsize") {
+  final class MapResizedException extends LmdbNativeException(MapResizedException.MDB_MAP_RESIZED, "Database contents grew beyond environment mapsize") {
   }
 }
 
-final class Dbi[T] private[torch](private val env: Env[T],var txn: Txn[T],var name: Array[Byte],var comparator: Comparator[T],var nativeCb: Boolean,var proxy: BufferProxy[T], flags: DbiFlags*) {
+final class Dbi[T] ( val env: Env[T],var txn: Txn[T],var name: Array[Byte],var comparator: Comparator[T],var nativeCb: Boolean,var proxy: BufferProxy[T], flags: DbiFlags*) {
   if (SHOULD_CHECK) {
     requireNonNull(txn)
     txn.checkReady()

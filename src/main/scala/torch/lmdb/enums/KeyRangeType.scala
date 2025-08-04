@@ -278,7 +278,7 @@ enum KeyRangeType:
    *
    * @return appropriate action in response to this buffer
    */
-  private[torch] def initialOp = this match {
+  def initialOp = this match {
     case FORWARD_ALL =>
       FIRST
     case FORWARD_AT_LEAST =>
@@ -330,7 +330,7 @@ enum KeyRangeType:
    * @param c      comparator (required)
    * @return response to this key
    */
-  private[torch] def iteratorOp[T, C <: Comparator[T]](start: T, stop: T, buffer: T, c: C): IteratorOp = {
+  def iteratorOp[T, C <: Comparator[T]](start: T, stop: T, buffer: T, c: C): IteratorOp = {
     requireNonNull(c, "Comparator required")
     if (buffer == null) return TERMINATE
     this match {
@@ -405,11 +405,11 @@ enum KeyRangeType:
    *
    * @return appropriate action for this key range type
    */
-  private[torch] def nextOp = if (isDirectionForward) NEXT
+  def nextOp = if (isDirectionForward) NEXT
   else PREV
 
   /** Action now required with the iterator. */
-//  private[torch] object IteratorOp extends Enumeration {
+//  object IteratorOp extends Enumeration {
 //    type IteratorOp = Value
 //    val
 enum IteratorOp:
@@ -425,7 +425,7 @@ enum IteratorOp:
   
 
   /** Action now required with the cursor. */
-//  private[torch] object CursorOp extends Enumeration {
+//  object CursorOp extends Enumeration {
 //    type CursorOp = Value
 //    val
   

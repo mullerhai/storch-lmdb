@@ -56,9 +56,9 @@ object Library {
    */
   val LMDB_EXTRACT_DIR_PROP = "torch.lmdb.extract.dir"
   /** Indicates the directory where the LMDB system library will be extracted. */
-  private[torch] val EXTRACT_DIR = getProperty(LMDB_EXTRACT_DIR_PROP, getProperty("java.io.tmpdir"))
-  private[torch] var LIB: Library.Lmdb = null
-  private[torch] var RUNTIME: Runtime = null
+  val EXTRACT_DIR = getProperty(LMDB_EXTRACT_DIR_PROP, getProperty("java.io.tmpdir"))
+  var LIB: Library.Lmdb = null
+  var RUNTIME: Runtime = null
 
   private def extract(name: String) = {
     val suffix = name.substring(name.lastIndexOf('.'))
@@ -91,7 +91,7 @@ object Library {
   }
 
   /** Structure to wrap a native <code>MDB_envinfo</code>. Not for external use. */
-  final class MDB_envinfo private[torch](runtime: Runtime) extends Struct(runtime) {
+  final class MDB_envinfo (runtime: Runtime) extends Struct(runtime) {
 
     final var f0_me_mapaddr: Struct#Pointer = new Pointer
     final var f1_me_mapsize: Struct#size_t =  new size_t
@@ -108,7 +108,7 @@ object Library {
   }
 
   /** Structure to wrap a native <code>MDB_stat</code>. Not for external use. */
-  final class MDB_stat private[torch](runtime: Runtime) extends Struct(runtime) {
+  final class MDB_stat (runtime: Runtime) extends Struct(runtime) {
 
     final var f0_ms_psize: Struct#u_int32_t = new u_int32_t
     final var f1_ms_depth: Struct#u_int32_t = new u_int32_t

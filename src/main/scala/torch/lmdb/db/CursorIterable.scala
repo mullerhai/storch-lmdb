@@ -67,23 +67,23 @@ object CursorIterable {
      */
     def vals: T = v.get
 
-    private[torch] def setK(key: T): Unit = {
+    def setK(key: T): Unit = {
       this.k = Some(key)
     }
 
-    private[torch] def setV(vals: T): Unit = {
+    def setV(vals: T): Unit = {
       this.v = Some(vals)
     }
   }
 
   /** Represents the internal {@link CursorIterable} state. */
-  private[torch] object State extends Enumeration {
+  object State extends Enumeration {
     type State = Value
     val REQUIRES_INITIAL_OP, REQUIRES_NEXT_OP, REQUIRES_ITERATOR_OP, RELEASED, TERMINATED = Value
   }
 }
 
-final class CursorIterable[T] private[torch](txn: Txn[T], dbi: Dbi[T], private val range: KeyRange[T], private val comparator: Comparator[T]) extends Iterable[CursorIterable.KeyVal[T]] with AutoCloseable {
+final class CursorIterable[T] (txn: Txn[T], dbi: Dbi[T], private val range: KeyRange[T], private val comparator: Comparator[T]) extends Iterable[CursorIterable.KeyVal[T]] with AutoCloseable {
 
   final private var cursor: Cursor[T] = dbi.openCursor(txn)
   final private var entry: CursorIterable.KeyVal[T] = new CursorIterable.KeyVal[T]
@@ -119,12 +119,13 @@ final class CursorIterable[T] private[torch](txn: Txn[T], dbi: Dbi[T], private v
         entry
       }
 
-      def remove(): Unit = {
-        cursor.delete()
-      }
+
     }
   }
 
+  def remove(): Unit = {
+    cursor.delete()
+  }
   private def executeCursorOp(op: CursorOp): Unit = {
     var found = false
     op match {

@@ -37,21 +37,21 @@ object Txn {
   /** Transaction must abort, has a child, or is invalid. */
   @SerialVersionUID(1L)
   object BadException {
-    private[torch] val MDB_BAD_TXN = -30_782
+    val MDB_BAD_TXN = -30_782
   }
 
   @SerialVersionUID(1L)
-  final class BadException private[torch] extends LmdbNativeException(BadException.MDB_BAD_TXN, "Transaction must abort, has a child, or is invalid") {
+  final class BadException extends LmdbNativeException(BadException.MDB_BAD_TXN, "Transaction must abort, has a child, or is invalid") {
   }
 
   /** Invalid reuse of reader locktable slot. */
   @SerialVersionUID(1L)
   object BadReaderLockException {
-    private[torch] val MDB_BAD_RSLOT = -30_783
+    val MDB_BAD_RSLOT = -30_783
   }
 
   @SerialVersionUID(1L)
-  final class BadReaderLockException private[torch] extends LmdbNativeException(BadReaderLockException.MDB_BAD_RSLOT, "Invalid reuse of reader locktable slot") {
+  final class BadReaderLockException extends LmdbNativeException(BadReaderLockException.MDB_BAD_RSLOT, "Invalid reuse of reader locktable slot") {
   }
 
   /** The proposed R-W transaction is incompatible with a R-O Env. */
@@ -104,11 +104,11 @@ object Txn {
   /** Transaction has too many dirty pages. */
   @SerialVersionUID(1L)
   object TxFullException {
-    private[torch] val MDB_TXN_FULL = -30_788
+    val MDB_TXN_FULL = -30_788
   }
 
   @SerialVersionUID(1L)
-  final class TxFullException private[torch] extends LmdbNativeException(TxFullException.MDB_TXN_FULL, "Transaction has too many dirty pages") {
+  final class TxFullException extends LmdbNativeException(TxFullException.MDB_TXN_FULL, "Transaction has too many dirty pages") {
   }
 
   /** Transaction states. */
@@ -117,7 +117,7 @@ object Txn {
 
 }
 
-final class Txn[T] private[torch](private val env: Env[T], private val parent: Txn[T], private val proxy: BufferProxy[T], flags: TxnFlags*) extends AutoCloseable {
+final class Txn[T] (private val env: Env[T], private val parent: Txn[T], private val proxy: BufferProxy[T], flags: TxnFlags*) extends AutoCloseable {
   final private var keyVal: KeyVal[T] = proxy.keyVal
   final private var ptr: Pointer = null
   final private var readOnly = false
@@ -230,15 +230,15 @@ final class Txn[T] private[torch](private val env: Env[T], private val parent: T
    */
   def vals: T = keyVal.vals
 
-  private[torch] def checkReadOnly(): Unit = {
+  def checkReadOnly(): Unit = {
     if (!readOnly) throw new Txn.ReadOnlyRequiredException
   }
 
-  private[torch] def checkReady(): Unit = {
+  def checkReady(): Unit = {
     if (state ne READY) throw new Txn.NotReadyException
   }
 
-  private[torch] def checkWritesAllowed(): Unit = {
+  def checkWritesAllowed(): Unit = {
     if (readOnly) throw new Txn.ReadWriteRequiredException
   }
 
@@ -247,11 +247,11 @@ final class Txn[T] private[torch](private val env: Env[T], private val parent: T
    *
    * @return the state
    */
-  private[torch] def getState = state
+  def getState = state
 
-  private[torch] def kv = keyVal
+  def kv = keyVal
 
-  private[torch] def newKeyVal = proxy.keyVal
+  def newKeyVal = proxy.keyVal
 
-  private[torch] def pointer = ptr
+  def pointer = ptr
 }

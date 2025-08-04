@@ -8,17 +8,15 @@ import java.util
 import scala.collection.mutable.ListBuffer
 
 class DataBase(private var dbDirectory: File) {
-  this.env = Env.create.setMaxDbs(0).open(this.dbDirectory)
 
-//  import scala.collection.JavaConversions.*
+  private val pathLmdb: String = null
+  private var db: Dbi[ByteBuffer] = null
+  private var env: Env[ByteBuffer] = null
+  this.env = Env.create.setMaxDbs(0).open(this.dbDirectory)
 
   for (obj <- this.env.getDbiNames) {
     System.out.println(new String(obj))
   }
-  private val pathLmdb: String = null
-  private var db: Dbi[ByteBuffer] = null
-  private var env: Env[ByteBuffer] = null
-
   private def FilterDbPath(fullPath: String) = new File(fullPath)
 
   def GetDbNames: String = {

@@ -58,7 +58,7 @@ object ByteBufProxy {
 //    o1.compareTo(o2)
 //  }
 
-  private[torch] def findField(c: String, name: String): Field = {
+  def findField(c: String, name: String): Field = {
     var clazz: Class[?] = null
     try {
       clazz = Class.forName(c)
